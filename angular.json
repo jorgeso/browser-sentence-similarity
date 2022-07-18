@@ -44,7 +44,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/browser-sentence-similarity",
+            "outputPath": "dist/browser-sentence-similarity/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -109,6 +109,65 @@
           "options": {
             "browserTarget": "browser-sentence-similarity:build"
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/browser-sentence-similarity/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "inlineStyleLanguage": "scss"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "browser-sentence-similarity:build:development",
+              "serverTarget": "browser-sentence-similarity:server:development"
+            },
+            "production": {
+              "browserTarget": "browser-sentence-similarity:build:production",
+              "serverTarget": "browser-sentence-similarity:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "browser-sentence-similarity:build:production",
+              "serverTarget": "browser-sentence-similarity:server:production"
+            },
+            "development": {
+              "browserTarget": "browser-sentence-similarity:build:development",
+              "serverTarget": "browser-sentence-similarity:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

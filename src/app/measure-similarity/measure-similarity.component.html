@@ -1,0 +1,26 @@
+<form class="main-form">
+    <mat-form-field appearance="fill" class="sentence-form-field">
+        <mat-label>Sentence 1</mat-label>
+        <input matInput [(ngModel)]="sentence_one" placeholder="enter a sentence" name="sentence_one" color="primary" [disabled]="loading">
+    </mat-form-field>
+    <div class="between">
+        compare with
+    </div>
+    <mat-form-field appearance="fill" class="sentence-form-field">
+        <mat-label>Sentence 2</mat-label>
+        <input matInput [(ngModel)]="sentence_two" placeholder="enter a sentence" name="sentence_two" color="primary" [disabled]="loading">
+    </mat-form-field>
+    <div class="button_container">
+        <button class="button" mat-raised-button color="primary" (click)="calculateSimilarity()" [disabled]="loading">
+            {{loading? "Loading" : "Compare"}}
+        </button>
+    </div>
+    <div *ngIf="distance != null">
+        <div>
+            Similarity: <strong>{{distance_label}}</strong>
+        </div>
+        <div>
+            Distance (1 = most distant, 0 = least distant): <strong>{{distance | number: '1.0-2'}}</strong>
+        </div>
+    </div>
+</form>
